@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,6 @@ import java.util.List;
 public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-    private List<Neighbour> favoriteNeighbour = DummyNeighbourGenerator.generateFavoriteNeighbour(); //todo test pour l'onglet favorite neighbour
     /**
      * {@inheritDoc}
      */
@@ -37,12 +37,30 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
     @Override
-    public List<Neighbour> getFavoriteNeighbour() {//todo test pour l'onglet favorite neighbour
+    public List<Neighbour> getFavoriteNeighbour() {
+        List<Neighbour> favoriteNeighbour = new ArrayList<>();
+        for (int i = 0; i < neighbours.size(); i++) {
+            if (neighbours.get(i).isFavorite()){
+                favoriteNeighbour.add(neighbours.get(i));
+            }
+        }
         return favoriteNeighbour;
     }
 
     @Override
-    public void createFavoriteNeighbour(Neighbour neighbour) {//todo test ajout en favorit
-        favoriteNeighbour.add(neighbour);
+    public void toggleIsNeighbourFavorite(Neighbour neighbour) {
+        int location = neighbours.indexOf(neighbour);
+        neighbours.get(location).setFavorite(!neighbour.isFavorite());
     }
+
+    @Override
+    public Neighbour getNeighbourById(long id) {
+        for (int i = 0; i < neighbours.size(); i++) {
+            if (neighbours.get(i).getId() == id) {
+                return neighbours.get(i);
+            }
+        }
+        return null;
+    }
+
 }

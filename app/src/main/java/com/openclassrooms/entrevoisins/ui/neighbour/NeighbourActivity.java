@@ -1,17 +1,20 @@
 package com.openclassrooms.entrevoisins.ui.neighbour;
 
-import android.content.Intent;
+import static com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity.NEIGHBOURS_INFO;
+
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,25 +40,47 @@ public class NeighbourActivity extends AppCompatActivity {
     @BindView(R.id.imageButton)
     ImageButton backButton;
 
+    private NeighbourApiService mApiService;
+
+    Neighbour myNeighbour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_neighbour);
         ButterKnife.bind(this);
-//        init();
+        mApiService = DI.getNeighbourApiService();
+
+        myNeighbour = (Neighbour) getIntent().getSerializableExtra(NEIGHBOURS_INFO);
+        Glide.with(this).load(myNeighbour.getAvatarUrl()).into(avatar);
+        nom1.setText(myNeighbour.getName());
+        nom2.setText(myNeighbour.getName());
+        adress.setText(myNeighbour.getAddress());
+        phoneNumber.setText(myNeighbour.getPhoneNumber());
+        aboutMe.setText(myNeighbour.getAboutMe());
+        socialNetwork.setText(getString(R.string.facebook_profile_url, myNeighbour.getName().toLowerCase()));
+
+        backButton.setOnClickListener(view -> this.finish());
+
+        favoriteButton.setOnClickListener(view -> {
+            mApiService.toggleIsNeighbourFavorite(myNeighbour);
+            myNeighbour = mApiService.getNeighbourById(myNeighbour.getId());
+            setNeighbourIsFavorite(myNeighbour);
+        });
     }
-/*    public static void goTo(NeighbourFragment activity) {
-        Intent intent = new Intent(activity, NeighbourActivity.class);
-        ActivityCompat.startActivity(activity, intent, null);
-    }*/ //todo ne marche pas
 
-//    Intent mNeighbour = this.getIntent();
+    public void setNeighbourIsFavorite(@NonNull Neighbour myNeighbour) {
+        if (myNeighbour.isFavorite()) {
+            favoriteButton.setImageResource(R.drawable.ic_star_white_24dp);
+        } else {
+            favoriteButton.setImageResource(R.drawable.ic_star_border_white_24dp);
+        }
+    }
 
-/*    String name = Neighbour.
-
-    private void init() {
-        nom1.setText();
-        ;
-    }*/
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setNeighbourIsFavorite(myNeighbour);
+    }
 }

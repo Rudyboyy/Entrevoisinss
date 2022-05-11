@@ -28,7 +28,10 @@ public interface NeighbourApiService {
      */
     void createNeighbour(Neighbour neighbour);
 
-    List<Neighbour> getFavoriteNeighbour();//todo test pour l'onglet favorite neighbour
+    List<Neighbour> getFavoriteNeighbour();
 
-    void createFavoriteNeighbour(Neighbour neighbour);//todo test ajout en favorit
+    void toggleIsNeighbourFavorite(Neighbour neighbour);
+
+    Neighbour getNeighbourById(long id);
+
 }

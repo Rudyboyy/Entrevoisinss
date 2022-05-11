@@ -16,6 +16,8 @@ import butterknife.OnClick;
 
 public class ListNeighbourActivity extends AppCompatActivity {
 
+    public static final String NEIGHBOURS_INFO = "neighbourInfo";
+
     // UI Components
     @BindView(R.id.tabs)
     TabLayout mTabLayout;
@@ -44,8 +46,4 @@ public class ListNeighbourActivity extends AppCompatActivity {
     void addNeighbour() {
         AddNeighbourActivity.navigate(this);
     }
-/*    @OnClick(R.id.item_list_name) //todo rajout essai sur le click du nom
-    void seeNeighbour() {
-        NeighbourActivity.goTo(this);
-    }*/ // todo ne marche pas
 }

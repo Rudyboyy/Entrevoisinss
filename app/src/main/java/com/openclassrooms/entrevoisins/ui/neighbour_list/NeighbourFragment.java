@@ -15,35 +15,39 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.ui.neighbour.NeighbourActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import butterknife.OnClick;
-
-
 public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+    private int pageIndex;
+    public static final String EXTRA_PAGE_INDEX = "extra_page_index";
 
 
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int pageIndex) {
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_PAGE_INDEX, pageIndex);
+
         NeighbourFragment fragment = new NeighbourFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getArguments() != null;
+        pageIndex = getArguments().getInt(EXTRA_PAGE_INDEX);
         mApiService = DI.getNeighbourApiService();
     }
 
@@ -62,9 +66,12 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-//        Context context = null; // todo fait: rajout de Context context = null;
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, getActivity())); // todo fait: essai get activity a la place du rajout context: null
+        if (pageIndex == 0) {
+            mNeighbours = mApiService.getNeighbours();
+        } else if (pageIndex == 1){
+            mNeighbours = mApiService.getFavoriteNeighbour();
+        }
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, getActivity()));
     }
 
     @Override
@@ -94,9 +101,4 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
-
-/*    @Subscribe // todo test affichage detail utilisateur  avec eventbus
-    public void detailNeighbour(NeighbourActivity event) {
-        initList();
-    }*/
 }

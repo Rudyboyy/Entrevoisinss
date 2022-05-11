@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity.NEIGHBOURS_INFO;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -23,16 +25,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
-    private final Context mContext;//todo fait: ajout de context
+    private final Context mContext;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, Context context) {//todo fait: ajout de context
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, Context context) {
         mNeighbours = items;
-        mContext = context;//todo fait: ajout de context
+        mContext = context;
     }
 
     @Override
@@ -58,25 +59,12 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
 
-        // todo fait: essai d'Intent
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                String name = mNeighbourName.setText(neighbour.getName());
+        holder.itemView.setOnClickListener(view -> {
 
-                Intent neighbourActivityIntent = new Intent(mContext, NeighbourActivity.class);
-//                neighbourActivityIntent.putExtra("name", name);
-                mContext.startActivity(neighbourActivityIntent);
-            }
+            Intent neighbourActivityIntent = new Intent(mContext, NeighbourActivity.class);
+            neighbourActivityIntent.putExtra(NEIGHBOURS_INFO, neighbour);
+            mContext.startActivity(neighbourActivityIntent);
         });
-
-        //todo peut etre pour l'ajout en favori (quelque chose d'identique a deleteButton)
-/*        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new NeighbourActivity());
-            }
-        });*/
     }
 
     @Override

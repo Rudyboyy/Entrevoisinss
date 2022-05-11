@@ -68,4 +68,12 @@ public class NeighboursListTest {
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
     }
+
+    //todo la liste des favoris doit etre vide
+
+    //todo le button ajout en favoris dois mettre le voisin sur true et inverssement
+
+    //todo quand on clique sur le button est  que le voisin est sur faux il doit ajouter le voisin a liste favoris et quand il est sur vrai l'enlevé
+
+    //todo quand on clique sur un voisin le detail du voisin doit s'afficher
 }

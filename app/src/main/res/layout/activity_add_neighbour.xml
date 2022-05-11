@@ -69,22 +69,6 @@
                 android:hint="Address"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
-                <!-- todo fait rajout facebook-->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/socialNetworkLyt"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/socialNetwork"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/Social_network"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/aboutMeLyt"

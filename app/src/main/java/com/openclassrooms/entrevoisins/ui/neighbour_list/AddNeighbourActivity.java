@@ -1,12 +1,12 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -37,8 +37,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
     TextInputLayout aboutMeInput;
     @BindView(R.id.create)
     MaterialButton addButton;
-    @BindView(R.id.socialNetworkLyt) //todo fait rajout le facebook
-    TextInputLayout socialNetworkInput;
 
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
@@ -90,8 +88,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 addressInput.getEditText().getText().toString(),
                 phoneInput.getEditText().getText().toString(),
                 aboutMeInput.getEditText().getText().toString(),
-                socialNetworkInput.getEditText().getText().toString()
-                //todo fait rajout le facebook
+                false
         );
         mApiService.createNeighbour(neighbour);
         finish();
