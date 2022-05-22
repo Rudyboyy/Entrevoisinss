@@ -8,7 +8,7 @@
 Entrevoisins is an application that allows people from the same neighborhood to provide small services: pet sitting, small DIY, bartering of objects, private lessons, etc. many options are available to users. 
 #### Logo
 ![Logo](https://user-images.githubusercontent.com/96139750/169272242-a6d377ff-b7be-4fe1-a6c0-897aa6d34832.png)
-## Installation
+### Installation
 ***
 A little intro about the installation. 
 #### Option 1
